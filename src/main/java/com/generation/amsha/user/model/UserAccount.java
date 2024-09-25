@@ -26,6 +26,7 @@ public class UserAccount {
     private String phoneNumber;
     private String password;
     private LocalDateTime createdAt;
+    private LocalDateTime archivedAt;
     private Role role;
     private Boolean archived;
     @OneToOne(mappedBy = "userAccount", optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
