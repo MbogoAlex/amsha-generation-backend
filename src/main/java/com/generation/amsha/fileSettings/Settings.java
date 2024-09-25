@@ -18,6 +18,6 @@ public class Settings {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String imagePath;
-    private String domain;
+    private String settingsKey;
+    private String value;
 }
