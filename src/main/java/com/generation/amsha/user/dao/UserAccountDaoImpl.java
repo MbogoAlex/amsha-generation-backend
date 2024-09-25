@@ -58,4 +58,12 @@ public class UserAccountDaoImpl implements UserAccountDao{
         entityManager.merge(userAccount);
         return userAccount;
     }
+
+    @Override
+    public Boolean existsByPhoneNumber(String phoneNumber) {
+        TypedQuery<UserAccount> query = entityManager.createQuery("from UserAccount where phoneNumber = :phoneNumber", UserAccount.class);
+        query.setParameter("phoneNumber", phoneNumber);
+        List<UserAccount> results = query.getResultList();
+        return !results.isEmpty();
+    }
 }

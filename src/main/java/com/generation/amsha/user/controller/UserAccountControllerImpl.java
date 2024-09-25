@@ -1,0 +1,66 @@
+package com.generation.amsha.user.controller;
+
+import com.generation.amsha.response.BuildResponse;
+import com.generation.amsha.response.Response;
+import com.generation.amsha.user.dto.UserPasswordDto;
+import com.generation.amsha.user.dto.UserUpdateDto;
+import com.generation.amsha.user.services.UserAccountServices;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/user/")
+public class UserAccountControllerImpl implements UserAccountController {
+    private BuildResponse buildResponse = new BuildResponse();
+    private final UserAccountServices userAccountServices;
+    @Autowired
+    public UserAccountControllerImpl(
+            UserAccountServices userAccountServices
+    ) {
+        this.userAccountServices = userAccountServices;
+    }
+
+    @Override
+    @PutMapping("user")
+    public ResponseEntity<Response> updateUser(UserUpdateDto userDto) {
+        return buildResponse.buildResponse("user", userAccountServices.updateUser(userDto), "User updated", HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("user/{userId}")
+    public ResponseEntity<Response> getUserById(@PathVariable("userId") Integer userId) {
+        return buildResponse.buildResponse("user", userAccountServices.getUserById(userId), "User fetched", HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("user/{email}")
+    public ResponseEntity<Response> getUserByEmail(@PathVariable("email") String email) {
+        return buildResponse.buildResponse("user", userAccountServices.getUserByEmail(email), "User fetched", HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("user/{phoneNumber}")
+    public ResponseEntity<Response> getUserByPhoneNumber(@PathVariable("phoneNumber") String phoneNumber) {
+        return buildResponse.buildResponse("user", userAccountServices.getUserByPhoneNumber(phoneNumber), "User fetched", HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("user/all")
+    public ResponseEntity<Response> getAllUsers() {
+        return buildResponse.buildResponse("user", userAccountServices.getAllUsers(), "Users fetched", HttpStatus.OK);
+    }
+
+    @Override
+    @PutMapping("user/archive/{userId}")
+    public ResponseEntity<Response> archiveUser(@PathVariable("userId") Integer userId) {
+        return buildResponse.buildResponse("user", userAccountServices.archiveUser(userId), "User archived", HttpStatus.OK);
+    }
+
+    @PutMapping("password")
+    @Override
+    public ResponseEntity<Response> changePassword(UserPasswordDto userPasswordDto) throws Exception {
+        return buildResponse.buildResponse("user", userAccountServices.changePassword(userPasswordDto), "Password updated", HttpStatus.OK);
+    }
+}

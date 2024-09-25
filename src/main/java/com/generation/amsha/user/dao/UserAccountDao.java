@@ -12,4 +12,5 @@ public interface UserAccountDao {
     UserAccount getUserByPhoneNumber(String phoneNumber);
     List<UserAccount> getAllUsers();
     UserAccount archiveUser(UserAccount userAccount);
+    Boolean existsByPhoneNumber(String phoneNumber);
 }
