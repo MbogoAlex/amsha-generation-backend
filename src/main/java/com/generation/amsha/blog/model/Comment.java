@@ -19,7 +19,7 @@ public class Comment {
     @Lob
     private String body;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private LocalDateTime lastUpdate;
     private Boolean archived;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

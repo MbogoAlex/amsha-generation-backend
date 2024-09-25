@@ -22,7 +22,7 @@ public class Blog {
     @Lob
     private String body;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private LocalDateTime lastUpdate;
     private Boolean archived;
     @OneToMany(mappedBy = "blog", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();

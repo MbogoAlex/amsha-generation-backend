@@ -11,4 +11,5 @@ public interface UserAccountDao {
     UserAccount getUserByEmail(String email);
     UserAccount getUserByPhoneNumber(String phoneNumber);
     List<UserAccount> getAllUsers();
+    UserAccount archiveUser(UserAccount userAccount);
 }

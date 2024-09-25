@@ -11,7 +11,7 @@ import java.util.List;
 public class UserAccountDaoImpl implements UserAccountDao{
     private final EntityManager entityManager;
     @Autowired
-    UserAccountDaoImpl(EntityManager entityManager) {
+    public UserAccountDaoImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
     @Override
@@ -51,5 +51,11 @@ public class UserAccountDaoImpl implements UserAccountDao{
     public List<UserAccount> getAllUsers() {
         TypedQuery<UserAccount> query = entityManager.createQuery("from userAccount", UserAccount.class);
         return query.getResultList();
+    }
+
+    @Override
+    public UserAccount archiveUser(UserAccount userAccount) {
+        entityManager.merge(userAccount);
+        return userAccount;
     }
 }
