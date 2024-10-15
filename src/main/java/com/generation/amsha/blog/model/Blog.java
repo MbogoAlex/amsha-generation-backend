@@ -19,15 +19,15 @@ public class Blog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String title;
-    @Lob
-    private String body;
     private LocalDateTime createdAt;
     private LocalDateTime lastUpdate;
+    private String image;
+    @Lob
+    private String paragraph;
     private Boolean archived;
+    private List<String> tags = new ArrayList<>();
     @OneToMany(mappedBy = "blog", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
-    @OneToMany(mappedBy = "blog", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    private List<BlogImage> images = new ArrayList<>();
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserAccount userAccount;

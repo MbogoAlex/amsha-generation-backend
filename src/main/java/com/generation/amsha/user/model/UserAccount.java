@@ -29,6 +29,8 @@ public class UserAccount {
     private LocalDateTime lastUpdate;
     private LocalDateTime archivedAt;
     private Role role;
+    private String userProfilePic;
+    private Boolean subscribed;
     private Boolean archived;
     @OneToOne(mappedBy = "userAccount", optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private UserImage image;
