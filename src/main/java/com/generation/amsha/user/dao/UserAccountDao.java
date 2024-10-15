@@ -9,7 +9,10 @@ public interface UserAccountDao {
     UserAccount updateUser(UserAccount userAccount);
     UserAccount getUserById(Integer userId);
     UserAccount getUserByEmail(String email);
+
+    UserAccount getUserByMerchantReferenceId(String ref);
     UserAccount getUserByPhoneNumber(String phoneNumber);
+
     List<UserAccount> getAllUsers();
     UserAccount archiveUser(UserAccount userAccount);
     Boolean existsByPhoneNumber(String phoneNumber);

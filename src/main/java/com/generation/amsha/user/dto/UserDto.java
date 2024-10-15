@@ -1,5 +1,6 @@
 package com.generation.amsha.user.dto;
 
+import com.generation.amsha.user.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,9 +17,12 @@ public class UserDto {
     private String fullName;
     private String email;
     private String phoneNumber;
+    private String profilePic;
     private LocalDateTime createdAt;
     private LocalDateTime archivedAt;
+    private Role role;
     private Integer blogs;
     private Integer comments;
+    private Integer transactions;
     private Boolean archived;
 }

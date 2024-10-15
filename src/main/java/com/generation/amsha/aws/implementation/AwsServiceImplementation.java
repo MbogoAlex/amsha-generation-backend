@@ -2,10 +2,7 @@ package com.generation.amsha.aws.implementation;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.ObjectListing;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.amazonaws.services.s3.model.*;
 import com.generation.amsha.aws.service.AwsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +24,33 @@ public class AwsServiceImplementation implements AwsService {
     @Autowired
     private AmazonS3 s3Client;
 
+    @Override
+    public String uploadFile(String bucketName, MultipartFile file) throws AmazonClientException, IOException {
+        ObjectMetadata metadata = new ObjectMetadata();
+        String fileName = LocalDateTime.now() + "_" + StringUtils.cleanPath(file.getOriginalFilename());
+        String contentType = file.getContentType();
+        long fileSize = file.getSize();
+        InputStream inputStream = file.getInputStream();
+
+        metadata.setContentLength(fileSize);
+        metadata.setContentType(contentType);
+
+        // Create a PutObjectRequest with PublicRead ACL
+        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, fileName, inputStream, metadata)
+                .withCannedAcl(CannedAccessControlList.PublicRead);
+
+        // Upload the file
+        s3Client.putObject(putObjectRequest);
+
+        log.info("File uploaded to bucket({}): {}", bucketName, fileName);
+
+        return fileName;
+    }
+
+
     // Method to upload a file to an S3 bucket
     @Override
-    public String uploadFile(
+    public String uploadFiles(
             final String bucketName,
             final MultipartFile[] files
     ) throws AmazonClientException, IOException {
@@ -50,6 +71,16 @@ public class AwsServiceImplementation implements AwsService {
 
         return "Upload successful";
 
+    }
+
+    @Override
+    public String getFileUrl(String bucketName, String keyName) {
+        // Construct the public URL for the file
+        String fileUrl = "https://" + bucketName + ".s3.amazonaws.com/" + keyName;
+
+        log.info("Public URL for file in bucket({}): {}", bucketName, keyName);
+
+        return fileUrl; // This URL will not expire
     }
 
     // Method to download a file from an S3 bucket

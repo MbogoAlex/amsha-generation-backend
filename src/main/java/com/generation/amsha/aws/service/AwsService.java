@@ -12,10 +12,17 @@ import java.util.List;
 public interface AwsService {
     
     // Method to upload a file to an S3 bucket
+
     String uploadFile(
+            final String bucketName,
+            final MultipartFile file
+    ) throws AmazonClientException, IOException;
+    String uploadFiles(
             final String bucketName,
             final MultipartFile[] files
     ) throws AmazonClientException, IOException;
+
+    String getFileUrl(final String bucketName, final String keyName);
 
     // Method to download a file from an S3 bucket
     ByteArrayOutputStream downloadFile(

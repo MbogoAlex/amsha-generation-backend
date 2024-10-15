@@ -37,7 +37,7 @@ public class AwsController {
     // Endpoint to upload a file to a bucket
     @PostMapping("/{bucketName}/upload")
     @SneakyThrows(IOException.class)
-    public ResponseEntity<Response> uploadFile(
+    public ResponseEntity<Response> uploadFiles(
             @PathVariable("bucketName") String bucketName,
             @RequestParam("file") MultipartFile[] files
     ) throws Exception {
@@ -45,7 +45,7 @@ public class AwsController {
             if (files.length == 0) {
                 return buildResponse.buildResponse("files", "Files is empty", "Empty", HttpStatus.OK);
             } else {
-                return buildResponse.buildResponse("files", service.uploadFile(bucketName, files), "files uploaded", HttpStatus.OK);
+                return buildResponse.buildResponse("files", service.uploadFiles(bucketName, files), "files uploaded", HttpStatus.OK);
             }
         } catch (Exception e) {
             throw new Exception(e);

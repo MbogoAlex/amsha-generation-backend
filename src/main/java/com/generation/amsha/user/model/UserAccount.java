@@ -2,6 +2,7 @@ package com.generation.amsha.user.model;
 
 import com.generation.amsha.blog.model.Blog;
 import com.generation.amsha.blog.model.Comment;
+import com.generation.amsha.transactions.model.Transaction;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,7 +31,11 @@ public class UserAccount {
     private LocalDateTime archivedAt;
     private Role role;
     private String userProfilePic;
+    private String imageName;
     private Boolean subscribed;
+    @Column(length = 500)
+    private String lastPaymentToken;
+    private String lastMerchantReference;
     private Boolean archived;
     @OneToOne(mappedBy = "userAccount", optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private UserImage image;
@@ -38,4 +43,6 @@ public class UserAccount {
     private List<Blog> blogArticles = new ArrayList<>();
     @OneToMany(mappedBy = "userAccount", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> blogComments = new ArrayList<>();
+    @OneToMany(mappedBy = "userAccount", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Transaction> transactions = new ArrayList<>();
 }

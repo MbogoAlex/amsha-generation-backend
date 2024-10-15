@@ -41,6 +41,13 @@ public class UserAccountDaoImpl implements UserAccountDao{
     }
 
     @Override
+    public UserAccount getUserByMerchantReferenceId(String ref) {
+        TypedQuery<UserAccount> query = entityManager.createQuery("from UserAccount where lastMerchantReference = :ref", UserAccount.class);
+        query.setParameter("ref", ref);
+        return query.getSingleResult();
+    }
+
+    @Override
     public UserAccount getUserByPhoneNumber(String phoneNumber) {
         TypedQuery<UserAccount> query = entityManager.createQuery("from UserAccount where phoneNumber = :phoneNumber", UserAccount.class);
         query.setParameter("phoneNumber", phoneNumber);
@@ -49,7 +56,7 @@ public class UserAccountDaoImpl implements UserAccountDao{
 
     @Override
     public List<UserAccount> getAllUsers() {
-        TypedQuery<UserAccount> query = entityManager.createQuery("from userAccount", UserAccount.class);
+        TypedQuery<UserAccount> query = entityManager.createQuery("from UserAccount", UserAccount.class);
         return query.getResultList();
     }
 

@@ -9,9 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
-@RequestMapping("/user/")
+@RequestMapping("/api/")
 public class UserAccountControllerImpl implements UserAccountController {
     private BuildResponse buildResponse = new BuildResponse();
     private final UserAccountServices userAccountServices;
@@ -27,21 +30,31 @@ public class UserAccountControllerImpl implements UserAccountController {
     public ResponseEntity<Response> updateUser(UserUpdateDto userDto) {
         return buildResponse.buildResponse("user", userAccountServices.updateUser(userDto), "User updated", HttpStatus.OK);
     }
+    @PutMapping("user/profilepic/{userId}/{bucketName}")
+    @Override
+    public ResponseEntity<Response> setProfilePic(@PathVariable("userId") Integer userId, @PathVariable("bucketName") String bucketName, MultipartFile file) throws IOException {
+        return buildResponse.buildResponse("user", userAccountServices.setUserProfilePic(userId, bucketName, file), "User profile pic set", HttpStatus.OK);
+    }
+    @DeleteMapping("user/profilepic/{userId}/{bucketName}")
+    @Override
+    public ResponseEntity<Response> deleteProfilePic(@PathVariable("userId") Integer userId, @PathVariable("bucketName") String bucketName) {
+        return buildResponse.buildResponse("user", userAccountServices.deleteProfilePic(userId, bucketName), "Profile pic deleted", HttpStatus.OK);
+    }
 
     @Override
-    @GetMapping("user/{userId}")
+    @GetMapping("user/id/{userId}")
     public ResponseEntity<Response> getUserById(@PathVariable("userId") Integer userId) {
         return buildResponse.buildResponse("user", userAccountServices.getUserById(userId), "User fetched", HttpStatus.OK);
     }
 
     @Override
-    @GetMapping("user/{email}")
+    @GetMapping("user/email/{email}")
     public ResponseEntity<Response> getUserByEmail(@PathVariable("email") String email) {
         return buildResponse.buildResponse("user", userAccountServices.getUserByEmail(email), "User fetched", HttpStatus.OK);
     }
 
     @Override
-    @GetMapping("user/{phoneNumber}")
+    @GetMapping("user/phone/{phoneNumber}")
     public ResponseEntity<Response> getUserByPhoneNumber(@PathVariable("phoneNumber") String phoneNumber) {
         return buildResponse.buildResponse("user", userAccountServices.getUserByPhoneNumber(phoneNumber), "User fetched", HttpStatus.OK);
     }
