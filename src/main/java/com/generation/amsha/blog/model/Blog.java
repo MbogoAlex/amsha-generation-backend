@@ -3,6 +3,7 @@ package com.generation.amsha.blog.model;
 import com.generation.amsha.user.model.UserAccount;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 public class Blog {
     @Id
@@ -20,8 +22,9 @@ public class Blog {
     private Integer id;
     private String title;
     private LocalDateTime createdAt;
-    private LocalDateTime lastUpdate;
-    private String image;
+    private LocalDateTime updatedAt;
+    private String imageName;
+    private String imagePath;
     @Lob
     private String paragraph;
     private Boolean archived;
