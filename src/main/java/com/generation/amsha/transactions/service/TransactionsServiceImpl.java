@@ -146,6 +146,7 @@ public class TransactionsServiceImpl implements TransactionsService{
             }
             wallet.setWalletBalance(wallet.getWalletBalance() + (Double) paymentResponse.get("amount"));
             userAccount.setAccountBalance(accountBalance + (Double) paymentResponse.get("amount"));
+            transactionsDao.updateWallet(wallet);
             userAccountDao.updateUser(userAccount);
             return saveTransaction(userAccount.getId(), (Double) paymentResponse.get("amount"));
         } else {
