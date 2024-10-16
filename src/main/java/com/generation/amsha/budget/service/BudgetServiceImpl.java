@@ -51,9 +51,9 @@ public class BudgetServiceImpl implements BudgetService{
     public BudgetDto updateBudget(BudgetUpdatePayload budgetPayload) {
         Budget budget = budgetDao.getBudgetByBudgetId(budgetPayload.getBudgetId());
         budget.setName(budgetPayload.getName());
-        budget.setPlannedAmount(budget.getPlannedAmount());
-        budget.setActualAmount(budget.getActualAmount());
-        budget.setUpdatedAt(budget.getUpdatedAt());
+        budget.setPlannedAmount(budgetPayload.getPlannedAmount());
+        budget.setActualAmount(budgetPayload.getActualAmount());
+        budget.setUpdatedAt(LocalDateTime.now().plusHours(3));
 
         return budgetMapper.budgetToBudgetDto(budgetDao.updateBudget(budget));
     }
