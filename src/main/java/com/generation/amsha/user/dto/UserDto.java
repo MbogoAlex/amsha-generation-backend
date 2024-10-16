@@ -21,6 +21,7 @@ public class UserDto {
     private LocalDateTime createdAt;
     private LocalDateTime archivedAt;
     private Role role;
+    private Double accountBalance;
     private Integer blogs;
     private Integer comments;
     private Integer transactions;

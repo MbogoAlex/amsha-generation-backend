@@ -6,6 +6,7 @@ import com.generation.amsha.transactions.dto.TransactionPayload;
 import com.generation.amsha.transactions.mapper.TransactionMapper;
 import com.generation.amsha.transactions.model.Transaction;
 import com.generation.amsha.transactions.model.TransactionType;
+import com.generation.amsha.transactions.model.Wallet;
 import com.generation.amsha.user.dao.UserAccountDao;
 import com.generation.amsha.user.model.UserAccount;
 import com.google.gson.Gson;
@@ -138,6 +139,14 @@ public class TransactionsServiceImpl implements TransactionsService{
 
         Map<String, Object> paymentResponse = gson.fromJson(jsonString, Map.class);
         if(paymentResponse.get("status").equals("200") && paymentResponse.get("payment_status_description").equals("Completed")) {
+            Wallet wallet = transactionsDao.getWalletById(1);
+            Double accountBalance = 0.0;
+            if(userAccount.getAccountBalance() != null) {
+                accountBalance = userAccount.getAccountBalance();
+            }
+            wallet.setWalletBalance(wallet.getWalletBalance() + (Double) paymentResponse.get("amount"));
+            userAccount.setAccountBalance(accountBalance + (Double) paymentResponse.get("amount"));
+            userAccountDao.updateUser(userAccount);
             return saveTransaction(userAccount.getId(), (Double) paymentResponse.get("amount"));
         } else {
             return false;
@@ -155,7 +164,6 @@ public class TransactionsServiceImpl implements TransactionsService{
                 .userAccount(userAccount)
                 .transactionType(TransactionType.DEPOSIT)
                 .build();
-
         transactionsDao.saveTransaction(transaction1);
 
         return true;

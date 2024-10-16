@@ -42,6 +42,7 @@ public class UserAccountServicesImpl implements UserAccountServices{
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .role(userDto.getRole())
                 .archived(false)
+                .accountBalance(0.0)
                 .createdAt(LocalDateTime.now())
                 .build();
         return userAccountMapper.toUserDto(userAccountDao.register(userAccount));

@@ -4,6 +4,7 @@ import com.generation.amsha.transactions.dto.TransactionDetailsPayload;
 import com.generation.amsha.transactions.dto.TransactionDto;
 import com.generation.amsha.transactions.dto.TransactionPayload;
 import com.generation.amsha.transactions.model.Transaction;
+import com.generation.amsha.transactions.model.Wallet;
 import org.apache.coyote.BadRequestException;
 
 import java.io.IOException;

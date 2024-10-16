@@ -19,5 +19,6 @@ public class UserLoginResponseDto {
     private LocalDateTime createdAt;
     private LocalDateTime archivedAt;
     private Role role;
+    private Double accountBalance;
     private String token;
 }

@@ -2,6 +2,7 @@ package com.generation.amsha.transactions.dao;
 
 import com.generation.amsha.transactions.model.Transaction;
 import com.generation.amsha.transactions.model.TransactionType;
+import com.generation.amsha.transactions.model.Wallet;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -27,6 +28,19 @@ public class TransactionsDaoImpl implements TransactionsDao{
     public Transaction saveTransaction(Transaction transaction) {
         entityManager.persist(transaction);
         return transaction;
+    }
+
+    @Override
+    public Wallet updateWallet(Wallet wallet) {
+        entityManager.merge(wallet);
+        return wallet;
+    }
+
+    @Override
+    public Wallet getWalletById(Integer id) {
+        TypedQuery<Wallet> query = entityManager.createQuery("from Wallet where id = :id", Wallet.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
     }
 
     @Override

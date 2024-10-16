@@ -43,6 +43,7 @@ public class UserAccountMapper {
                 .createdAt(userAccount.getCreatedAt())
                 .archived(userAccount.getArchived())
                 .archivedAt(userAccount.getArchivedAt())
+                .accountBalance(userAccount.getAccountBalance())
                 .blogs(blogs.size())
                 .comments(comments.size())
                 .transactions(transactions.size())
@@ -58,6 +59,7 @@ public class UserAccountMapper {
                 .phoneNumber(userAccount.getPhoneNumber())
                 .createdAt(userAccount.getCreatedAt())
                 .role(userAccount.getRole())
+                .accountBalance(userAccount.getAccountBalance())
                 .token(token)
                 .archivedAt(userAccount.getArchivedAt())
                 .build();

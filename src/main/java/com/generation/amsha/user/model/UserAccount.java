@@ -38,6 +38,7 @@ public class UserAccount {
     private String lastPaymentToken;
     private String lastMerchantReference;
     private Boolean archived;
+    private Double accountBalance;
     @OneToOne(mappedBy = "userAccount", optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private UserImage image;
     @OneToMany(mappedBy = "userAccount", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
