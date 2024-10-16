@@ -35,7 +35,7 @@ public class TransactionsServiceImpl implements TransactionsService{
     private final String CONSUMER_SECRET = "rix1TV7Bs0ffJPb/KcFpTh+AVdY=";
 
     private final String CALLBACK_URL = "https://github.com/MbogoAlex";
-    private final String notificationId = "9032beaa-7044-4bb3-87dc-dca2fc3018c6";
+    private final String notificationId = "3ada2327-9261-4126-9372-dca1ad2a0e3c";
     @Autowired
     public TransactionsServiceImpl(
             TransactionsDao transactionsDao,
