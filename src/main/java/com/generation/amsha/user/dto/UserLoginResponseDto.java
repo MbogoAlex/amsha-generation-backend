@@ -1,5 +1,6 @@
 package com.generation.amsha.user.dto;
 
+import com.generation.amsha.user.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,5 +18,6 @@ public class UserLoginResponseDto {
     private String phoneNumber;
     private LocalDateTime createdAt;
     private LocalDateTime archivedAt;
+    private Role role;
     private String token;
 }

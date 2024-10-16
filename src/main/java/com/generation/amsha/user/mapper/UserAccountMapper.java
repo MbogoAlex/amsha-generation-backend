@@ -57,6 +57,7 @@ public class UserAccountMapper {
                 .email(userAccount.getEmail())
                 .phoneNumber(userAccount.getPhoneNumber())
                 .createdAt(userAccount.getCreatedAt())
+                .role(userAccount.getRole())
                 .token(token)
                 .archivedAt(userAccount.getArchivedAt())
                 .build();
