@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-@CrossOrigin(origins = {"http://localhost:4200", "https://amsha-gen-96609f863a46.herokuapp.com"})
+@CrossOrigin
 @RestController
 @RequestMapping("/api/auth/")
 public class AuthController {
