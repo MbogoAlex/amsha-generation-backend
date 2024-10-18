@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
-@CrossOrigin
+@CrossOrigin(origins = {"http://localhost:4200", "https://amsha-gen-96609f863a46.herokuapp.com"})
 @RestController
 @RequestMapping("/api/")
 public class TransactionsControllerImpl implements TransactionsController{

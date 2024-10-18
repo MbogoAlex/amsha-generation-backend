@@ -28,6 +28,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors().and()  // Enable CORS in the security filter chain
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(
                                 "/api/auth/**",
@@ -46,6 +47,7 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
+
 
     private static final String[] AUTH_WHITELIST = {
             "/api/auth/**"
