@@ -73,23 +73,23 @@ public class TransactionsDaoImpl implements TransactionsDao{
         }
 
         // Filter by startDate if provided
-        if (startDate != null || !startDate.isEmpty()) {
+        if (startDate != null && !startDate.isEmpty()) {
             LocalDate start = LocalDate.parse(startDate);
             LocalDateTime startDateTime = start.atStartOfDay(); // Start at 00:00:00
             predicates.add(cb.greaterThanOrEqualTo(transaction.get("createdAt"), startDateTime));
         }
 
         // Filter by endDate if provided
-        if (endDate != null) {
+        if (endDate != null && !endDate.isEmpty()) {
             LocalDate end = LocalDate.parse(endDate);
             LocalDateTime endDateTime = end.atTime(23, 59, 59); // End at 23:59:59
             predicates.add(cb.lessThanOrEqualTo(transaction.get("createdAt"), endDateTime));
         }
 
         // Filter by type if provided
-        if (type != null) {
+        if (type != null && !type.isEmpty()) {
             try {
-                TransactionType transactionTypeEnum = TransactionType.valueOf(type);
+                TransactionType transactionTypeEnum = TransactionType.valueOf(type.toUpperCase());
                 predicates.add(cb.equal(transaction.get("transactionType"), transactionTypeEnum));
             } catch (IllegalArgumentException e) {
                 // Handle case where the type string does not match any TransactionType enum value
