@@ -31,6 +31,7 @@ public class SecurityConfig {
                 .cors().and()  // Enable CORS in the security filter chain
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(
+                                "/api/**",
                                 "/api/auth/**",
                                 "/swagger-ui**",
                                 "/swagger-ui/**",
