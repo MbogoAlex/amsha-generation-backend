@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
-
+@CrossOrigin(origins = {"http://localhost:4200", "https://amsha-gen-96609f863a46.herokuapp.com"})
 @RestController
 @RequestMapping("/s3bucketstorage")
 public class AwsController {

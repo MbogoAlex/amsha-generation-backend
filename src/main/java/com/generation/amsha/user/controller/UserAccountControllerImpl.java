@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-
+@CrossOrigin(origins = {"http://localhost:4200", "https://amsha-gen-96609f863a46.herokuapp.com"})
 @RestController
 @RequestMapping("/api/")
 public class UserAccountControllerImpl implements UserAccountController {
