@@ -35,7 +35,7 @@ public class TransactionsServiceImpl implements TransactionsService{
     private final String CONSUMER_KEY = "aeMcWKL/TxO/TW6H3E76XCyp3D4RoIGk";
     private final String CONSUMER_SECRET = "rix1TV7Bs0ffJPb/KcFpTh+AVdY=";
 
-    private final String CALLBACK_URL = "https://github.com/MbogoAlex";
+    private final String CALLBACK_URL = "https://amsh-a-generation.vercel.app/dashboard";
     private final String notificationId = "3ada2327-9261-4126-9372-dca1ad2a0e3c";
     @Autowired
     public TransactionsServiceImpl(
