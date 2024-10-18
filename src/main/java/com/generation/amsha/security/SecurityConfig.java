@@ -34,7 +34,8 @@ public class SecurityConfig {
                                 "/api/auth/**",
                                 "/swagger-ui**",
                                 "/swagger-ui/**",
-                                "/api/transaction/ipn"
+                                "/api/transaction/ipn",
+                                "/api/transaction/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
