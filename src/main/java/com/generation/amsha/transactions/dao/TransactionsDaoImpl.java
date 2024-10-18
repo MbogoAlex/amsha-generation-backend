@@ -73,7 +73,7 @@ public class TransactionsDaoImpl implements TransactionsDao{
         }
 
         // Filter by startDate if provided
-        if (startDate != null) {
+        if (startDate != null || !startDate.isEmpty()) {
             LocalDate start = LocalDate.parse(startDate);
             LocalDateTime startDateTime = start.atStartOfDay(); // Start at 00:00:00
             predicates.add(cb.greaterThanOrEqualTo(transaction.get("createdAt"), startDateTime));

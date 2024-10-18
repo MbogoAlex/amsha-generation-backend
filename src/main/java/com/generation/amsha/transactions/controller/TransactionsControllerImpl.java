@@ -45,7 +45,7 @@ public class TransactionsControllerImpl implements TransactionsController{
             @RequestParam(name = "userId", required = false) Integer userId,
             @RequestParam(name = "startDate", required = false) String startDate,
             @RequestParam(name = "endDate", required = false) String endDate,
-            String type) {
+            @RequestParam(name = "type", required = false) String type) {
         return buildResponse.buildResponse("transaction", transactionsService.getAllTransactions(userId, startDate, endDate, type), "Transactions fetched", HttpStatus.OK);
     }
     @PostMapping("transaction/ipn")
