@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-@CrossOrigin(origins = {"http://localhost:4200", "https://amsha-gen-96609f863a46.herokuapp.com"})
+@CrossOrigin
 @RestController
 @RequestMapping("/api/")
 public class BudgetControllerImpl implements BudgetController{
