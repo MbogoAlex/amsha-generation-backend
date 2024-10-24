@@ -32,7 +32,7 @@ public class UserAccountControllerImpl implements UserAccountController {
     }
     @PutMapping("user/profilepic/{userId}/{bucketName}")
     @Override
-    public ResponseEntity<Response> setProfilePic(@PathVariable("userId") Integer userId, @PathVariable("bucketName") String bucketName, MultipartFile file) throws IOException {
+    public ResponseEntity<Response> setProfilePic(@PathVariable("userId") Integer userId, @PathVariable("bucketName") String bucketName, @RequestPart(value = "file") MultipartFile file) throws IOException {
         return buildResponse.buildResponse("user", userAccountServices.setUserProfilePic(userId, bucketName, file), "User profile pic set", HttpStatus.OK);
     }
     @DeleteMapping("user/profilepic/{userId}/{bucketName}")
