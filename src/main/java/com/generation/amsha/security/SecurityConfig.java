@@ -37,6 +37,7 @@ public class SecurityConfig {
                                 "/api/transaction/ipn",
                                 "/api/transaction/**",
                                 "/api/transactions/**",
+                                "/api/budget/**",
                                 "/api/blog/**",
                                 "/api/user**",
                                 "/api/user/**"
