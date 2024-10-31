@@ -1,4 +1,4 @@
-package com.generation.amsha.transactions.model;
+package com.generation.amsha.savingsPlan.model;
 
 import com.generation.amsha.user.model.UserAccount;
 import jakarta.persistence.*;
@@ -14,16 +14,17 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @Entity
-public class Transaction {
+public class SavingsPlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String confirmationCode;
+    private String title;
+    private String description;
+    private Double currentAmount;
+    private Double targetAmount;
     private LocalDateTime createdAt;
-    private String mode;
-    private Double amount;
+    private LocalDateTime updatedAt;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserAccount userAccount;
-    private TransactionType transactionType;
 }

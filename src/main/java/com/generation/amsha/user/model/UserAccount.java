@@ -3,6 +3,7 @@ package com.generation.amsha.user.model;
 import com.generation.amsha.blog.model.Blog;
 import com.generation.amsha.blog.model.Comment;
 import com.generation.amsha.budget.model.Budget;
+import com.generation.amsha.savingsPlan.model.SavingsPlan;
 import com.generation.amsha.transactions.model.Transaction;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -49,4 +50,6 @@ public class UserAccount {
     private List<Transaction> transactions = new ArrayList<>();
     @OneToMany(mappedBy = "userAccount", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Budget> budgets = new ArrayList<>();
+    @OneToMany(mappedBy = "userAccount", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<SavingsPlan> savingsPlans = new ArrayList<>();
 }

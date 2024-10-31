@@ -148,7 +148,9 @@ public class TransactionsServiceImpl implements TransactionsService{
             userAccount.setAccountBalance(accountBalance + (Double) paymentResponse.get("amount"));
             transactionsDao.updateWallet(wallet);
             userAccountDao.updateUser(userAccount);
-            return saveTransaction(userAccount.getId(), (Double) paymentResponse.get("amount"));
+            String paymentMethod = (String) paymentResponse.get("payment_method");
+            String confirmationCode = (String) paymentResponse.get("confirmation_code");
+            return saveTransaction(userAccount.getId(), (Double) paymentResponse.get("amount"), paymentMethod, confirmationCode);
         } else {
             return false;
         }
@@ -156,10 +158,11 @@ public class TransactionsServiceImpl implements TransactionsService{
     }
 
 
-    Boolean saveTransaction(Integer userId, Double amount) throws URISyntaxException, IOException, InterruptedException {
+    Boolean saveTransaction(Integer userId, Double amount, String mode, String code) throws URISyntaxException, IOException, InterruptedException {
         UserAccount userAccount = userAccountDao.getUserById(userId);
         Transaction transaction1 = Transaction.builder()
-                .mode("M-PESA")
+                .mode(mode)
+                .confirmationCode(code)
                 .createdAt(LocalDateTime.now().plusHours(3))
                 .amount(amount)
                 .userAccount(userAccount)
