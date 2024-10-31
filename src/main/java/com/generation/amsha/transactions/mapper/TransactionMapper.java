@@ -10,6 +10,7 @@ public class TransactionMapper {
     public TransactionDto transactionToTransactionDto(Transaction transaction) {
         return TransactionDto.builder()
                 .id(transaction.getId())
+                .transactionCode(transaction.getConfirmationCode())
                 .createdAt(transaction.getCreatedAt())
                 .mode(transaction.getMode())
                 .amount(transaction.getAmount())

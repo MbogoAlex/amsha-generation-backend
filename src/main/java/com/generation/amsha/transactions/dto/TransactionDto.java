@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 public class TransactionDto {
     private Integer id;
+    private String transactionCode;
     private LocalDateTime createdAt;
     private String mode;
     private Double amount;
