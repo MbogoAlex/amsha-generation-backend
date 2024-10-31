@@ -1,6 +1,8 @@
 package com.generation.amsha.user.services;
 
 import com.generation.amsha.aws.service.AwsService;
+import com.generation.amsha.savingsPlan.dao.SavingsPlanDao;
+import com.generation.amsha.savingsPlan.model.SavingsPlan;
 import com.generation.amsha.user.dao.UserAccountDao;
 import com.generation.amsha.user.dto.*;
 import com.generation.amsha.user.mapper.UserAccountMapper;
@@ -19,16 +21,19 @@ import java.util.List;
 public class UserAccountServicesImpl implements UserAccountServices{
     UserAccountMapper userAccountMapper = new UserAccountMapper();
     private final UserAccountDao userAccountDao;
+    private final SavingsPlanDao savingsPlanDao;
     private final PasswordEncoder passwordEncoder;
 
     private final AwsService awsService;
     @Autowired
     public UserAccountServicesImpl(
             UserAccountDao userAccountDao,
+            SavingsPlanDao savingsPlanDao,
             PasswordEncoder passwordEncoder,
             AwsService awsService
     ) {
         this.userAccountDao = userAccountDao;
+        this.savingsPlanDao = savingsPlanDao;
         this.passwordEncoder = passwordEncoder;
         this.awsService = awsService;
     }
@@ -45,7 +50,48 @@ public class UserAccountServicesImpl implements UserAccountServices{
                 .accountBalance(0.0)
                 .createdAt(LocalDateTime.now())
                 .build();
-        return userAccountMapper.toUserDto(userAccountDao.register(userAccount));
+
+        UserAccount userAccount1 = userAccountDao.register(userAccount);
+
+        SavingsPlan savingsPlan1 = SavingsPlan.builder()
+                .title("Amsha Professional")
+                .description("Advanced studies plan")
+                .createdAt(LocalDateTime.now().plusHours(3))
+                .archived(false)
+                .userAccount(userAccount1)
+                .currentAmount(0.0)
+                .targetAmount(0.0)
+                .build();
+
+        SavingsPlan savingsPlan2 = SavingsPlan.builder()
+                .title("Amsha Lock")
+                .description("Target Savings")
+                .createdAt(LocalDateTime.now().plusHours(3))
+                .archived(false)
+                .userAccount(userAccount1)
+                .currentAmount(0.0)
+                .targetAmount(0.0)
+                .build();
+
+        SavingsPlan savingsPlan3 = SavingsPlan.builder()
+                .title("Amsha ESG ")
+                .description("Amsha ESG")
+                .createdAt(LocalDateTime.now().plusHours(3))
+                .archived(false)
+                .userAccount(userAccount1)
+                .currentAmount(0.0)
+                .targetAmount(0.0)
+                .build();
+
+        userAccount1.setSavingsPlans(new ArrayList<>());
+        userAccount1.getSavingsPlans().add(savingsPlan1);
+        userAccount1.getSavingsPlans().add(savingsPlan2);
+        userAccount1.getSavingsPlans().add(savingsPlan3);
+
+
+        UserAccount updatedUser = userAccountDao.updateUser(userAccount1);
+
+        return userAccountMapper.toUserDto(updatedUser);
     }
 
     @Override
@@ -133,5 +179,10 @@ public class UserAccountServicesImpl implements UserAccountServices{
         } catch (Exception e) {
             throw new Exception(e);
         }
+    }
+
+    @Override
+    public UserWalletDto getUserWallet(Integer userId) {
+        return userAccountMapper.toUserWalletDto(userAccountDao.getUserById(userId));
     }
 }

@@ -30,7 +30,7 @@ public class SavingsPlanDaoImpl implements SavingsPlanDao{
 
     @Override
     public SavingsPlan updateSavingsPlan(SavingsPlan savingsPlan) {
-        entityManager.persist(savingsPlan);
+        entityManager.merge(savingsPlan);
         return savingsPlan;
     }
 

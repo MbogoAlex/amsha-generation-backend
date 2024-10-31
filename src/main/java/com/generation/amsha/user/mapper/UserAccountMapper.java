@@ -2,15 +2,33 @@ package com.generation.amsha.user.mapper;
 
 import com.generation.amsha.blog.model.Blog;
 import com.generation.amsha.blog.model.Comment;
+import com.generation.amsha.savingsPlan.model.SavingsPlan;
 import com.generation.amsha.transactions.model.Transaction;
 import com.generation.amsha.user.dto.UserDto;
 import com.generation.amsha.user.dto.UserLoginResponseDto;
+import com.generation.amsha.user.dto.UserWalletDto;
 import com.generation.amsha.user.model.UserAccount;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserAccountMapper {
+
+    public UserWalletDto toUserWalletDto(UserAccount userAccount) {
+        Integer savings = userAccount.getSavingsPlans().size();
+        double savingsAmount = 0.0;
+        for(SavingsPlan savingsPlan : userAccount.getSavingsPlans()) {
+            savingsAmount = savingsAmount + savingsPlan.getCurrentAmount();
+        }
+        double availableBalance = userAccount.getAccountBalance() - savingsAmount;
+        return UserWalletDto.builder()
+                .accountBalance(userAccount.getAccountBalance())
+                .availableBalance(availableBalance)
+                .savings(savings)
+                .savingsAmount(savingsAmount)
+                .userDto(toUserDto(userAccount))
+                .build();
+    }
     public UserDto toUserDto(UserAccount userAccount) {
         List<Blog> blogs;
         List<Comment> comments;

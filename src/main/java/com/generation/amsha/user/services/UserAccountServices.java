@@ -22,4 +22,6 @@ public interface UserAccountServices {
     UserDto archiveUser(Integer userId);
 
     UserDto changePassword(UserPasswordDto userPasswordDto) throws Exception;
+
+    UserWalletDto getUserWallet(Integer userId);
 }

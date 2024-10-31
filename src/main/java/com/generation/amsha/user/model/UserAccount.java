@@ -38,6 +38,8 @@ public class UserAccount {
     @Column(length = 500)
     private String lastPaymentToken;
     private String lastMerchantReference;
+    private Boolean depositToSavingsPlan;
+    private Integer planId;
     private Boolean archived;
     private Double accountBalance;
     @OneToOne(mappedBy = "userAccount", optional = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)

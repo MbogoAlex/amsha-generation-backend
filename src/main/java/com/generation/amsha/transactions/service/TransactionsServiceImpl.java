@@ -1,5 +1,7 @@
 package com.generation.amsha.transactions.service;
 
+import com.generation.amsha.savingsPlan.dao.SavingsPlanDao;
+import com.generation.amsha.savingsPlan.model.SavingsPlan;
 import com.generation.amsha.transactions.dao.TransactionsDao;
 import com.generation.amsha.transactions.dto.TransactionDto;
 import com.generation.amsha.transactions.dto.TransactionPayload;
@@ -31,6 +33,7 @@ public class TransactionsServiceImpl implements TransactionsService{
     TransactionMapper transactionMapper = new TransactionMapper();
     private final TransactionsDao transactionsDao;
     private final UserAccountDao userAccountDao;
+    private final SavingsPlanDao savingsPlanDao;
 
     private final String CONSUMER_KEY = "aeMcWKL/TxO/TW6H3E76XCyp3D4RoIGk";
     private final String CONSUMER_SECRET = "rix1TV7Bs0ffJPb/KcFpTh+AVdY=";
@@ -40,10 +43,12 @@ public class TransactionsServiceImpl implements TransactionsService{
     @Autowired
     public TransactionsServiceImpl(
             TransactionsDao transactionsDao,
-            UserAccountDao userAccountDao
+            UserAccountDao userAccountDao,
+            SavingsPlanDao savingsPlanDao
     ) {
         this.transactionsDao = transactionsDao;
         this.userAccountDao = userAccountDao;
+        this.savingsPlanDao = savingsPlanDao;
     }
     @Transactional
     @Override
@@ -132,7 +137,7 @@ public class TransactionsServiceImpl implements TransactionsService{
         HttpResponse<String> getResponse = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
 
         if(getResponse.statusCode() != HttpStatus.OK.value()) {
-            return false;
+            throw new BadRequestException(token+"Failed to deposit money");
         }
 
         String jsonString = getResponse.body();
@@ -152,7 +157,7 @@ public class TransactionsServiceImpl implements TransactionsService{
             String confirmationCode = (String) paymentResponse.get("confirmation_code");
             return saveTransaction(userAccount.getId(), (Double) paymentResponse.get("amount"), paymentMethod, confirmationCode);
         } else {
-            return false;
+            throw new BadRequestException(token+"Failed to deposit money");
         }
 
     }
@@ -160,6 +165,11 @@ public class TransactionsServiceImpl implements TransactionsService{
 
     Boolean saveTransaction(Integer userId, Double amount, String mode, String code) throws URISyntaxException, IOException, InterruptedException {
         UserAccount userAccount = userAccountDao.getUserById(userId);
+        if(userAccount.getDepositToSavingsPlan()) {
+            SavingsPlan savingsPlan = savingsPlanDao.getSavingsPlanByPlanId(userAccount.getPlanId());
+            savingsPlan.setCurrentAmount(savingsPlan.getCurrentAmount() + amount);
+            savingsPlanDao.updateSavingsPlan(savingsPlan);
+        }
         Transaction transaction1 = Transaction.builder()
                 .mode(mode)
                 .confirmationCode(code)
@@ -169,7 +179,9 @@ public class TransactionsServiceImpl implements TransactionsService{
                 .transactionType(TransactionType.DEPOSIT)
                 .build();
         transactionsDao.saveTransaction(transaction1);
-
+        userAccount.setDepositToSavingsPlan(false);
+        userAccount.setPlanId(null);
+        userAccountDao.updateUser(userAccount);
         return true;
     }
 

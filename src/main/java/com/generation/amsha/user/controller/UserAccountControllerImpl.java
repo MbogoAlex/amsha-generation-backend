@@ -5,6 +5,7 @@ import com.generation.amsha.response.Response;
 import com.generation.amsha.user.dto.UserPasswordDto;
 import com.generation.amsha.user.dto.UserUpdateDto;
 import com.generation.amsha.user.services.UserAccountServices;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class UserAccountControllerImpl implements UserAccountController {
 
     @Override
     @PutMapping("user")
-    public ResponseEntity<Response> updateUser(UserUpdateDto userDto) {
+    public ResponseEntity<Response> updateUser(@RequestBody UserUpdateDto userDto) {
         return buildResponse.buildResponse("user", userAccountServices.updateUser(userDto), "User updated", HttpStatus.OK);
     }
     @PutMapping("user/profilepic/{userId}/{bucketName}")
@@ -75,5 +76,10 @@ public class UserAccountControllerImpl implements UserAccountController {
     @Override
     public ResponseEntity<Response> changePassword(UserPasswordDto userPasswordDto) throws Exception {
         return buildResponse.buildResponse("user", userAccountServices.changePassword(userPasswordDto), "Password updated", HttpStatus.OK);
+    }
+    @GetMapping("user/wallet/uid/{userId}")
+    @Override
+    public ResponseEntity<Response> getUserWallet(@PathVariable("userId") Integer userId) {
+        return buildResponse.buildResponse("user", userAccountServices.getUserWallet(userId), "User wallet fetched", HttpStatus.OK);
     }
 }

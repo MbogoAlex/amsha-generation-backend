@@ -22,4 +22,5 @@ public interface UserAccountController {
     ResponseEntity<Response> getAllUsers();
     ResponseEntity<Response> archiveUser(Integer userId);
     ResponseEntity<Response> changePassword(UserPasswordDto userPasswordDto) throws Exception;
+    ResponseEntity<Response> getUserWallet(Integer userId);
 }
