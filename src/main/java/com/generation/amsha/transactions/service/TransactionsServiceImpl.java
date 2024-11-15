@@ -165,7 +165,13 @@ public class TransactionsServiceImpl implements TransactionsService{
 
     Boolean saveTransaction(Integer userId, Double amount, String mode, String code) throws URISyntaxException, IOException, InterruptedException {
         UserAccount userAccount = userAccountDao.getUserById(userId);
-        if(userAccount.getDepositToSavingsPlan()) {
+        Boolean depositToSavingsPlan;
+        if(userAccount.getTransactions() != null) {
+            depositToSavingsPlan = userAccount.getDepositToSavingsPlan();
+        } else {
+            depositToSavingsPlan = false;
+        }
+        if(depositToSavingsPlan) {
             SavingsPlan savingsPlan = savingsPlanDao.getSavingsPlanByPlanId(userAccount.getPlanId());
             savingsPlan.setCurrentAmount(savingsPlan.getCurrentAmount() + amount);
             savingsPlanDao.updateSavingsPlan(savingsPlan);
